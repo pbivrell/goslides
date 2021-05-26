@@ -1,65 +1,180 @@
-# Motivating Generics in Go
+# Generics in Go
 
 Paul Bivrell
 12 May 2021
 Slack: @pbj
 
-## Agenda
+## What do you mean Generics in Go?
 
-1. Why belabor the topic
-1. Understand the problem
-1. Explore 'alternatives'
-1. View accepted proposal
-1. Run some generic go code?
+## Generics and Go
 
-__My Goal:__
+__Loose Definition__:
 
-Convince __you__ that generics are a good idea. Generate excitement about the way they will exist in Go.
+_Generics is a style of programming which allow programmers to write operations where the type of the data is defined by the user of the code rather than the writer._
+
+__Issue__: This style of programming does not currently exist in Go
+
+__Solution__:
+
+On Feb 20, 2021 the [proposal](https://github.com/golang/go/issues/43651#issuecomment-782705489) to add generic programming to Go has been accepted.
+
+ As early as 1.18 (Feb 2022) we could see generics in Go 🎉
 
 
-## Why talk about generics? 
+## What will you learn?
 
-## Because...
+## Minimal Agenda
 
-: This link here which I pulled from Ian Lance Taylors most recent post about Generics is Go. In this link you'll find a post about Go's lack of generics not 24 hours after the languages public release. It will be the first of many generics have been a highly sought after feature in every Go user survery since it's inseption.
+* Discuss what types of Go problems generics solves
+* Throughly explore the accepted proposal for generics in Go
+* Run example code in a demo implementation
+* Briefly explore the future of Generics in Go
 
-- People have [always](https://groups.google.com/forum/#!msg/golang-nuts/70-pdwUUrbI/onMsQspcljcJ) complained about them
+__My Goal__:
 
-: Increases maturity and offers a decrease in complexity through code deduplication
-- Benifit the language
+Make you excited for the Generics in Go
 
-: Allows firmilarity to other popular languages, adds another tool to a go programmers tool box, encourages an alternative method of thinking that breaks from the strict verbosity imposed on us by a solely statically typed language
-- Benifit the community
-- ...
 
-: As of Feb 10, 2021 the generics proposal has been accepted, which means they will be implemented and added to the language. Currently slated for Go 1.18.
-- They are comming to Go!! 🥳 
+## The problem
 
-## Why do we wan't generics?
+## Assertion
 
-## The problem(s)
-
-There are a number of things that fall out from the lack of generics. It is glaringly obvious when you see some examples.
+In Go we can not write one block of code that works with different types
 
 ## List Search
 
-.code generics/searchstring.go
+.play generics/searchstring.go 
 
 ## List Search (now with ints)
 
-.code generics/searchint.go
+.play generics/searchint.go
+
+## Generic search?
+
+But what about interface{}?
+
+.play generics/searchinterface.go 
+
+## Static typing?
+
+The previous code misses the mark for a good generic implementation because it subtraverts the purpose of static typing.
+
+.play generics/searchinterfacebad.go  /START OMIT/,/END OMIT/
+
+The interface{} implementation returns an interface{} not a string. We required a type cast.
+
+.play -edit generics/searchinterfacefixed.go /START OMIT/,/END OMIT/
+
+This method avoids all of the benifits and compile time safety we get from using a staticly typed language.
+
+## Other alternatives
+
+__Reflect [pkg](https://golang.org/pkg/reflect/)__
+
+* Difficult to read and write
+* Potentially slow
+
+__Code generation__
+
+* Complicates build process
+* Add's weird untouchable go files to your library
+
+## The (proposed) solution
+
+## Copy example
+
+Let's look at a very simple example. How can we use generics to write the following functions a single time.
+
+.code generics/copystring.go /START OMIT/,/END OMIT/
+
+## Generic copy
+
+.code -edit generics/copygeneric.go /START OMIT/,/END OMIT/
+
+
+__What's new here?__
+* Type parameter list 
+* Type constriant
+
+Runnable [Link](https://go2goplay.golang.org/p/CbcKpfcRf0E)
+
+## Making Search Generic
+
+## Working Generic Search?
+
+.code -edit generics/searchgenericinvalid.go
+
+Runnable [link](https://go2goplay.golang.org/p/LMcNNUX_lGh)
+
+* This code does not work :(
+
+## Comparable type constraint
+
+Operator == does not work on __any__ type
+
+__New Type Constraint:__
+
+We need to change our type constriant from __any__ to a constraint that compares things
+
+.code -edit generics/searchgeneric.go  /START OMIT/,/END OMIT/
+
+* __comparable__ like __any__ is a predefined type constraint. It matches any type that can be compared with == and !=
 
 ## Generic search
 
-.code generics/genericsearch.go
+.code generics/searchgeneric.go
 
 Runnable [link](https://go2goplay.golang.org/p/g_JOUlzJ4k0). 
 
-_Note the syntax in this runnable is different then the above. The go2go play ground is running a different syntax then the syntax in the accepted proposal_
+## Getting in the weeds with Type Constraints
 
-## Examples Section
+## Max function
 
-- Classic List simplification
-- Simple data structure example
-- Struct member sharing
+Let's reduce these max functions in to a single generic function. Can we use __any__?
+
+.code generics/maxs.go /START OMIT/,/END OMIT/
+
+Runnable [link](https://go2goplay.golang.org/p/7FMxNMkClZe)
+
+## Defining our own type constraint
+
+Operator > does not wok on every type. We must define a type constraint 
+
+.code generics/genericmax.go /START OMIT/,/END OMIT/
+
+Runnable [link](https://go2goplay.golang.org/p/n-cXKd-RUCJ)
+
+## Type constraints with methods
+
+We can't define operators on user defined types. We instead use methods on types. Unsurprisingly we can use the standard interface syntax to constrain a generic type.
+
+.code generics/methods.go /START OMIT/,/END OMIT/
+
+Runnable [link](https://go2goplay.golang.org/p/qPxXMTAQwAQ)
+
+## Multiple type constraints
+
+The type parameter list as it implies can take multiple values for a type parameter
+
+.code generics/multiple.go /START OMIT/,/END OMIT/
+
+Runnable [link](https://go2goplay.golang.org/p/02nd1sCKzvU)
+
+## Type constraints
+
+Type constraints empower our functions to define what set of operations it can perform, allowing it to be type agnostic.
+
+## Generic types
+
+
+## Generic list
+
+## Generic struct memeber?
+
+## Benfits to Generics
+
+## Future of Generics
+
+## Fun examples
+
 

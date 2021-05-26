@@ -7,7 +7,8 @@ func main() {
 	fmt.Println(Search(2, []int{1, 2, 3}))
 }
 
-func Search (type Comparable) (find Comparable, list []Comparable) (item Comparable) {
+// START OMIT
+func Search[T comparable](find T, list []T) (item T) {
 	for _, v := range list {
 		if v == find {
 			return v
@@ -15,3 +16,4 @@ func Search (type Comparable) (find Comparable, list []Comparable) (item Compara
 	}
 	return item
 }
+// END OMIT
