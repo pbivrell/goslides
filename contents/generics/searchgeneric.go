@@ -8,7 +8,7 @@ func main() {
 }
 
 // START OMIT
-func Search[T comparable](find T, list []T) (item T) {
+func Search[T any](find T, list []T) (item T) {
 	for _, v := range list {
 		if v == find {
 			return v

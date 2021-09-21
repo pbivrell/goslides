@@ -1,8 +1,20 @@
-# Generics in Go
+# Introduction to Generic Programming in Go
 
 Paul Bivrell
 12 May 2021
 Slack: @pbj
+
+## What will you learn?
+
+## Minimal Agenda
+
+* Discuss what types of problems generics solves
+* Explore the accepted proposal for generics in Go
+* Run example code in a demo implementation
+
+__My Goal__:
+
+Make you excited for the Generics in Go
 
 ## What do you mean Generics in Go?
 
@@ -21,18 +33,6 @@ On Feb 20, 2021 the [proposal](https://github.com/golang/go/issues/43651#issueco
  As early as 1.18 (Feb 2022) we could see generics in Go 🎉
 
 
-## What will you learn?
-
-## Minimal Agenda
-
-* Discuss what types of Go problems generics solves
-* Throughly explore the accepted proposal for generics in Go
-* Run example code in a demo implementation
-* Briefly explore the future of Generics in Go
-
-__My Goal__:
-
-Make you excited for the Generics in Go
 
 
 ## The problem
@@ -77,7 +77,9 @@ __Reflect [pkg](https://golang.org/pkg/reflect/)__
 __Code generation__
 
 * Complicates build process
-* Add's weird untouchable go files to your library
+* Undermines go tool chain
+* Uncompilable Artifact
+* Not standardized
 
 ## The (proposed) solution
 
@@ -126,15 +128,19 @@ We need to change our type constriant from __any__ to a constraint that compares
 
 Runnable [link](https://go2goplay.golang.org/p/g_JOUlzJ4k0). 
 
-## Getting in the weeds with Type Constraints
+## Custom type constraints
 
 ## Max function
 
-Let's reduce these max functions in to a single generic function. Can we use __any__?
+Let's reduce these max functions in to a single generic function
 
 .code generics/maxs.go /START OMIT/,/END OMIT/
 
-Runnable [link](https://go2goplay.golang.org/p/7FMxNMkClZe)
+## Generic Max
+
+.code generics/genericmaxbroken.go /START OMIT/,/END OMIT/
+
+Runnable [link](https://go2goplay.golang.org/p/OMwYimIv-ea)
 
 ## Defining our own type constraint
 
@@ -144,13 +150,9 @@ Operator > does not wok on every type. We must define a type constraint
 
 Runnable [link](https://go2goplay.golang.org/p/n-cXKd-RUCJ)
 
-## Type constraints with methods
+Note that __any__ is just an alias for __interface{}__
 
-We can't define operators on user defined types. We instead use methods on types. Unsurprisingly we can use the standard interface syntax to constrain a generic type.
-
-.code generics/methods.go /START OMIT/,/END OMIT/
-
-Runnable [link](https://go2goplay.golang.org/p/qPxXMTAQwAQ)
+## More type constraints
 
 ## Multiple type constraints
 
@@ -160,21 +162,35 @@ The type parameter list as it implies can take multiple values for a type parame
 
 Runnable [link](https://go2goplay.golang.org/p/02nd1sCKzvU)
 
-## Type constraints
+## Type constraints with methods
 
-Type constraints empower our functions to define what set of operations it can perform, allowing it to be type agnostic.
+## Interfaces as Interfaces
 
-## Generic types
+We can't define operators on user defined types. We instead use methods on types. Unsurprisingly we can use the standard interface syntax to constrain a generic type.
 
+.code generics/sort.go /START OMIT/,/END OMIT/
 
-## Generic list
+Runnable [link](https://go2goplay.golang.org/p/E4AfKBBS4Tl)
 
-## Generic struct memeber?
+## Closing Words
 
-## Benfits to Generics
+## Tip of the iceberg
 
-## Future of Generics
+* There is a lot more to explore in the [current generics proposal](https://go.googlesource.com/proposal/+/refs/heads/master/design/43651-type-parameters.md)
 
-## Fun examples
+__Subject to Change__
 
+* The implementation can [change](https://github.com/golang/go/issues/45346)
 
+__So far so Good__
+
+This generic implementation is relatively simple, solves problems with minimal additional complexity, and feels like Go.
+
+## Resources
+
+* [Generics Playground](https://go2goplay.golang.org/)
+* [Accepted type parameter proposal](https://go.googlesource.com/proposal/+/refs/heads/master/design/43651-type-parameters.md)
+* [Proposal discussion on github](https://github.com/golang/go/issues/43651)
+* [GopherCon 2019 Generics Talk - Ian Lance Taylor](https://www.youtube.com/watch?v=WzgLqE-3IhY&t=296s)
+* [GopherCon 2020 Generics Talk - Robert Griesemer](https://www.youtube.com/watch?v=TborQFPY2IM)
+* [Indepth proposal review - Bill Kennedy](https://www.youtube.com/watch?v=gIEPspmbMHM)
