@@ -3,7 +3,7 @@
 The is a repo of go-present slides for various topics I have given
 
 | Title | Summary | Presented Date | Presentation Location | Notes |
-|--|--|--|--|
+|--|--|--|--|--|
 | Generics and when to use them in Go | A summary of the offical generic feature set for Go 1.18. Some practical examples of generics in Go. A set of guidelines for when you might want to apply generics in Go | Novemeber 2021 | Comcast Internal Go Club| |
 
 
