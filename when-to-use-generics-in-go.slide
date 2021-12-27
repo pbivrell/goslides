@@ -12,7 +12,7 @@ A type constraint defines the set of methods and operators a type must have to b
 
 Because of their functional similarity to interfaces we can reuse that syntax.
 
-.code -edit generics2/constraints.go /START_STRINGER OMIT/,/END_WRITER OMIT/
+.code -edit when-to-use-generics-in-go/constraints.go /START_STRINGER OMIT/,/END_WRITER OMIT/
 
 
 
@@ -20,25 +20,25 @@ Because of their functional similarity to interfaces we can reuse that syntax.
 
 We can also now add type sets to interfaces to define the operators that are permitted.
 
-.code -edit generics2/constraints.go /START_ONLYSIGNED OMIT/,/END_ONLYSIGNED OMIT/
+.code -edit when-to-use-generics-in-go/constraints.go /START_ONLYSIGNED OMIT/,/END_ONLYSIGNED OMIT/
 
 This creates a constraint that can use all of the following operators (*,  /,  %,  <<,  >>,  &,  &^, +,  -, |, ^, ==, !=, <, <=, >, >=)
 
 The constraint above only matches things that are exactly int, int8, int16, int32, and int64. For example BetterInt would not be acceptable as an OnlySignedInt.
 
-.code -edit generics2/constraints.go /START_BETTERTYPE OMIT/,/END_BETTERTYPE OMIT/
+.code -edit when-to-use-generics-in-go/constraints.go /START_BETTERTYPE OMIT/,/END_BETTERTYPE OMIT/
 
 ## Type approximation elements
 
 To include a type who's underlying type is another type we use the approximation element syntax
 
-.code -edit generics2/constraints.go /START_SIGNED OMIT/,/END_SIGNED OMIT/
+.code -edit when-to-use-generics-in-go/constraints.go /START_SIGNED OMIT/,/END_SIGNED OMIT/
 
 ## Method and type sets in constraint
 
 Unsurprisingly we can use combinations of methods and type sets to further specify the constraint 
 
-.code -edit generics2/constraints.go /START_ABSOLUTE OMIT/,/END_ABSOLUTE OMIT/
+.code -edit when-to-use-generics-in-go/constraints.go /START_ABSOLUTE OMIT/,/END_ABSOLUTE OMIT/
 
 ## Predeclared constraints
 
@@ -52,25 +52,25 @@ There are two predeclared type constraints `any` and `comparable`
 
 We use type constraints to write functions on generic data.
 
-.code -edit generics2/functions1.go /START_FUNC OMIT/,/END_FUNC OMIT/
+.code -edit when-to-use-generics-in-go/functions1.go /START_FUNC OMIT/,/END_FUNC OMIT/
 
 We can call this function by passing the type of our data as a type argument
 
-.code -edit generics2/functions1.go /START_CALLS1 OMIT/,/END_CALLS1 OMIT/
+.code -edit when-to-use-generics-in-go/functions1.go /START_CALLS1 OMIT/,/END_CALLS1 OMIT/
 
 Using type inference we can omit the type argument
 
-.code -edit generics2/functions1.go /START_CALLS2 OMIT/,/END_CALLS2 OMIT/
+.code -edit when-to-use-generics-in-go/functions1.go /START_CALLS2 OMIT/,/END_CALLS2 OMIT/
 
 ## Generic Search
 
 Perhaps a more practical example of function
 
-.code -edit generics2/functions2.go /START_FUNC OMIT/,/END_FUNC OMIT/
+.code -edit when-to-use-generics-in-go/functions2.go /START_FUNC OMIT/,/END_FUNC OMIT/
 
 ## Using generic search
 
-.play -edit generics2/functions2.go /START_CALLS OMIT/,/END_CALLS OMIT/
+.play -edit when-to-use-generics-in-go/functions2.go /START_CALLS OMIT/,/END_CALLS OMIT/
 
 ## Generic Types
 
@@ -80,11 +80,11 @@ Performing functions on generic data in itself is useful. However go 1.18 offers
 
 A generic type can contain any one type that matches it's constraint.
 
-.code -edit generics2/stack.go /START_STACK OMIT/,/END_STACK OMIT/
+.code -edit when-to-use-generics-in-go/stack.go /START_STACK OMIT/,/END_STACK OMIT/
 
 ## Using generic types
 
-.code -edit generics2/stack.go /START_MAIN OMIT/,/END_MAIN OMIT/
+.code -edit when-to-use-generics-in-go/stack.go /START_MAIN OMIT/,/END_MAIN OMIT/
 
 Important note a generic type can contain only the type specified when it's instantiated
 
@@ -92,26 +92,26 @@ Important note a generic type can contain only the type specified when it's inst
 
 Type parameters can be values in struct
 
-.code -edit generics2/queue.go /START_TYPE OMIT/,/END_TYPE OMIT/
+.code -edit when-to-use-generics-in-go/queue.go /START_TYPE OMIT/,/END_TYPE OMIT/
 
 ## Queue methods
 
-.code -edit generics2/queue.go /START_FUNC OMIT/,/END_FUNC OMIT/
+.code -edit when-to-use-generics-in-go/queue.go /START_FUNC OMIT/,/END_FUNC OMIT/
 
 ## Queue usage
 
-.code -edit generics2/queue.go /START_MAIN OMIT/,/END_MAIN OMIT/
+.code -edit when-to-use-generics-in-go/queue.go /START_MAIN OMIT/,/END_MAIN OMIT/
 
 ## Non container example
 
 We can have multiple same or different type parameters 
 
-.code -edit generics2/map.go /START_FUNC OMIT/,/END_FUNC OMIT/
+.code -edit when-to-use-generics-in-go/map.go /START_FUNC OMIT/,/END_FUNC OMIT/
 
 ## Map usage
 
 
-.code -edit generics2/map.go /START_MAIN OMIT/,/END_MAIN OMIT/
+.code -edit when-to-use-generics-in-go/map.go /START_MAIN OMIT/,/END_MAIN OMIT/
 
 
 
