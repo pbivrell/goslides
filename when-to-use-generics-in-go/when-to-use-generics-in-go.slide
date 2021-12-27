@@ -119,7 +119,7 @@ We can have multiple same or different type parameters
 
 **Write non generic code**
 
-Use the following to see if your code is canadiate for generics
+Use the following to see if your code is candidate for generics
 
 1. Are you duplicating code
 2. Is there a set (n > 1) of types that your code can operate on

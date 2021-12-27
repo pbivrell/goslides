@@ -57,7 +57,7 @@ But what about interface{}?
 
 ## Static typing?
 
-The previous code misses the mark for a good generic implementation because it subtraverts the purpose of static typing.
+The previous code misses the mark for a good generic implementation because it undermines the purpose of static typing.
 
 .play src/searchinterfacebad.go  /START OMIT/,/END OMIT/
 
@@ -65,7 +65,7 @@ The interface{} implementation returns an interface{} not a string. We required 
 
 .play -edit src/searchinterfacefixed.go /START OMIT/,/END OMIT/
 
-This method avoids all of the benifits and compile time safety we get from using a staticly typed language.
+This method avoids all of the benefits and compile time safety we get from using a statically typed language.
 
 ## Other alternatives
 
@@ -96,7 +96,7 @@ Let's look at a very simple example. How can we use generics to write the follow
 
 __What's new here?__
 * Type parameter list 
-* Type constriant
+* Type constraint
 
 Runnable [Link](https://go2goplay.golang.org/p/CbcKpfcRf0E)
 
@@ -116,7 +116,7 @@ Operator == does not work on __any__ type
 
 __New Type Constraint:__
 
-We need to change our type constriant from __any__ to a constraint that compares things
+We need to change our type constraint from __any__ to a constraint that compares things
 
 .code -edit src/searchgeneric.go  /START OMIT/,/END OMIT/
 
