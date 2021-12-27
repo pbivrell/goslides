@@ -1,5 +1,10 @@
 package main
 
+import (
+	"strconv"
+	"fmt"
+)
+
 // START_FUNC OMIT
 func Map[T1, T2 any](s []T1, f func(T1) T2) []T2 {
 	r := make([]T2, len(s))
@@ -13,7 +18,7 @@ func Map[T1, T2 any](s []T1, f func(T1) T2) []T2 {
 // START_MAIN OMIT
 func toInt(s string) int {
 	i, _ := strconv.Atoi(s)
-	return
+	return i 
 }
 
 type Named struct {

@@ -47,6 +47,7 @@ func main() {
 	s2 := Stack[X]{}
 	s2.Push(X{ A: "A"})
 	s2.Push(X{ A: "B"})
+	fmt.Println(s2.Pop())
 	// END_MAIN OMIT
 
 }

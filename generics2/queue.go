@@ -1,5 +1,10 @@
 package main
 
+import (
+	"fmt"
+	"sync"
+)
+
 // START_TYPE OMIT
 type Queue[T any] struct {
 	items chan []T // non-empty slices only
@@ -10,7 +15,7 @@ func NewQueue[T any]() *Queue[T] {
 	items := make(chan []T , 1)
 	empty := make(chan bool, 1)
 	empty <- true
-	return &Queue{items, empty}
+	return &Queue[T]{items, empty}
 }
 
 // END_TYPE OMIT
@@ -46,10 +51,14 @@ func main() {
 	q1.Put("banana")
 	q1.Put("kiwi")
 
+	wg := &sync.WaitGroup{}
+	wg.Add(3)
 	for i := 0; i < 3; i++ {
 		go func() {
 			fmt.Println(q1.Get())
+			wg.Done()
 		}()
 	}
+	wg.Wait()
 }
 // END_MAIN OMIT

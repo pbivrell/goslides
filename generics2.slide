@@ -4,7 +4,61 @@ Paul Bivrell
 1 November 2021
 Slack: @pbj
 
+## Primer
+
+Go 1.18 slated to release in February. It will be the biggest syntactic change to the language since Go 1. 
+
+After years of work from the Go team and a little more than a year proposing and debating with the larger community, an implementation of generic programming (parametric polymorphism) has been mostly fleshed out. In just two weeks the 1.18 code freeze begins which means no new features will be added for generics initial release.
+
+Today we are going explore all the syntax changes, some practical examples and briefly discuss my opinions as when generics might be useful in Go.
+
 ## Overview of the Generic syntax
+
+## Generic Functions
+
+## Generic Function syntax
+
+We use square brackets to write functions on generic data.
+
+.code -edit generics2/functions1.go /START_FUNC OMIT/,/END_FUNC OMIT/
+
+We can call this function by passing the type of our data as a type argument
+
+.code -edit generics2/functions1.go /START_CALLS1 OMIT/,/END_CALLS1 OMIT/
+
+Using type inference we can omit the type argument
+
+.play -edit generics2/functions1.go /START_CALLS2 OMIT/,/END_CALLS2 OMIT/
+
+## More useful generic function
+
+We can use generics to write functions that return us values based on the type they are provided
+
+.code -edit generics2/functions3.go /START_FUNC OMIT/,/END_FUNC OMIT/
+
+Example usage
+
+.play -edit generics2/functions3.go /START_MAIN OMIT/,/END_MAIN OMIT/
+
+## Generic Search
+
+.code -edit generics2/functions2.go /START_FUNC OMIT/,/END_FUNC OMIT/
+
+Not all types in go can be compared with == so we must use the *comparable* type constraint
+
+.play -edit generics2/sample.go
+
+## Using generic search
+
+.play -edit generics2/functions2.go /START_CALLS OMIT/,/END_CALLS OMIT/
+
+## Constraints
+
+## Predeclared constraints
+
+There are two predeclared type constraints `any` and `comparable`
+* any is an alias for interface{}. Which is just useful short hand for all types
+* comparable is all types that you can use == and != on
 
 ## Constraints the concept
 
@@ -12,8 +66,7 @@ A type constraint defines the set of methods and operators a type must have to b
 
 Because of their functional similarity to interfaces we can reuse that syntax.
 
-.code -edit generics2/constraints.go /START_STRINGER OMIT/,/END_WRITER OMIT/
-
+.code -edit generics2/constraints.go /START_STRINGER OMIT/,/END_STRINGER OMIT/
 
 
 ## Type Sets in Constraints
@@ -24,11 +77,13 @@ We can also now add type sets to interfaces to define the operators that are per
 
 This creates a constraint that can use all of the following operators (*,  /,  %,  <<,  >>,  &,  &^, +,  -, |, ^, ==, !=, <, <=, >, >=)
 
-The constraint above only matches things that are exactly int, int8, int16, int32, and int64. For example BetterInt would not be acceptable as an OnlySignedInt.
-
-.code -edit generics2/constraints.go /START_BETTERTYPE OMIT/,/END_BETTERTYPE OMIT/
+.play -edit generics2/constraints.go /START_MAIN OMIT/,/END_MAIN OMIT/
 
 ## Type approximation elements
+
+The previous constraint only matches things that are exactly int, int8, int16, int32, and int64. For example OtherInt would not be acceptable as an OnlySignedInt.
+
+.code -edit generics2/constraints.go /START_BETTERTYPE OMIT/,/END_BETTERTYPE OMIT/
 
 To include a type who's underlying type is another type we use the approximation element syntax
 
@@ -40,51 +95,20 @@ Unsurprisingly we can use combinations of methods and type sets to further speci
 
 .code -edit generics2/constraints.go /START_ABSOLUTE OMIT/,/END_ABSOLUTE OMIT/
 
-## Predeclared constraints
-
-There are two predeclared type constraints `any` and `comparable`
-* any is an alias for interface{}. Which is just useful short hand for all types
-* comparable is all types that you can use == and != on
-
-## Generic Functions
-
-## Generic Function syntax
-
-We use type constraints to write functions on generic data.
-
-.code -edit generics2/functions1.go /START_FUNC OMIT/,/END_FUNC OMIT/
-
-We can call this function by passing the type of our data as a type argument
-
-.code -edit generics2/functions1.go /START_CALLS1 OMIT/,/END_CALLS1 OMIT/
-
-Using type inference we can omit the type argument
-
-.code -edit generics2/functions1.go /START_CALLS2 OMIT/,/END_CALLS2 OMIT/
-
-## Generic Search
-
-Perhaps a more practical example of function
-
-.code -edit generics2/functions2.go /START_FUNC OMIT/,/END_FUNC OMIT/
-
-## Using generic search
-
-.play -edit generics2/functions2.go /START_CALLS OMIT/,/END_CALLS OMIT/
-
 ## Generic Types
 
 ## Generic type
 
 Performing functions on generic data in itself is useful. However go 1.18 offers us even more power with generic types. 
 
-A generic type can contain any one type that matches it's constraint.
+A generic type can contain any type that matches it's constraint.
 
 .code -edit generics2/stack.go /START_STACK OMIT/,/END_STACK OMIT/
 
+
 ## Using generic types
 
-.code -edit generics2/stack.go /START_MAIN OMIT/,/END_MAIN OMIT/
+.play -edit generics2/stack.go /START_MAIN OMIT/,/END_MAIN OMIT/
 
 Important note a generic type can contain only the type specified when it's instantiated
 
@@ -100,7 +124,7 @@ Type parameters can be values in struct
 
 ## Queue usage
 
-.code -edit generics2/queue.go /START_MAIN OMIT/,/END_MAIN OMIT/
+.play -edit generics2/queue.go /START_MAIN OMIT/,/END_MAIN OMIT/
 
 ## Non container example
 
@@ -110,8 +134,7 @@ We can have multiple same or different type parameters
 
 ## Map usage
 
-
-.code -edit generics2/map.go /START_MAIN OMIT/,/END_MAIN OMIT/
+.play -edit generics2/map.go /START_MAIN OMIT/,/END_MAIN OMIT/
 
 
 
@@ -119,12 +142,14 @@ We can have multiple same or different type parameters
 
 **Write non generic code**
 
-Use the following to see if your code is canadiate for generics
+If you are tempted to write generic code ask yourself the following 3 questions
 
-1. Are you duplicating code
-2. Is there a set (n > 1) of types that your code can operate on
-3. Will the user of my code be willing to specify a type parameter
+1. Are you copy and pasting existing code?
+2. Is there a set (n > 1) of types that your code can operate on?
+3. Will the user of my code be willing to specify a type parameter?
 
 **Final thoughts**
 
-So far I think generics are most valuable for collections and operations on collections. As such I think it is unlikely that you should often write generic code. Though you may frequently use generic code.
+So far I think generics are most valuable for collections and operations on collections. As such I think it is unlikely that you should often write generic code (a standard library of these will come eventually). Though you may frequently use existing generic code to reduce boiler plate.
+
+Generics will be fantastic for the subset of problems they are meant to solve.
