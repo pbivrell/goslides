@@ -1,10 +1,10 @@
 module github.com/pbivrell/goslides
 
-go 1.16
+go 1.18
 
 require (
-	github.com/yuin/goldmark v1.4.1 // indirect
-	golang.org/x/net v0.0.0-20210917221730-978cfadd31cf // indirect
-	golang.org/x/sys v0.0.0-20210921065528-437939a70204 // indirect
-	golang.org/x/tools v0.1.7 // indirect
+	github.com/yuin/goldmark v1.4.4 // indirect
+	golang.org/x/net v0.0.0-20211216030914-fe4d6282115f // indirect
+	golang.org/x/sys v0.0.0-20211216021012-1d35b9e2eb4e // indirect
+	golang.org/x/tools v0.1.8 // indirect
 )
