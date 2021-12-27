@@ -1,10 +1,9 @@
 # README
 
-The is a repo of go-present slides for various topics I have given.
+The is a repo of go-present slides for various topics I have given
 
 | Title | Summary | Presented Date | Presentation Location | Notes |
 |--|--|--|--|
-| Introduction to Generic Programming in Go | A motivation for what generics is and why we might want them in Go. Followed by a summary of the proposed generics feature set as of April 2021 with examples | May 2021 | Comcast Internal Go Club | The examples in these slides may not be runnable they were using an theoritical syntax |
 | Generics and when to use them in Go | A summary of the offical generic feature set for Go 1.18. Some practical examples of generics in Go. A set of guidelines for when you might want to apply generics in Go | Novemeber 2021 | Comcast Internal Go Club| |
 
 

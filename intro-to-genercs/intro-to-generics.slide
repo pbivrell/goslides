@@ -43,27 +43,27 @@ In Go we can not write one block of code that works with different types
 
 ## List Search
 
-.play intro-to-generics/searchstring.go 
+.play src/searchstring.go 
 
 ## List Search (now with ints)
 
-.play intro-to-generics/searchint.go
+.play src/searchint.go
 
 ## Generic search?
 
 But what about interface{}?
 
-.play intro-to-generics/searchinterface.go 
+.play src/searchinterface.go 
 
 ## Static typing?
 
 The previous code misses the mark for a good generic implementation because it subtraverts the purpose of static typing.
 
-.play intro-to-generics/searchinterfacebad.go  /START OMIT/,/END OMIT/
+.play src/searchinterfacebad.go  /START OMIT/,/END OMIT/
 
 The interface{} implementation returns an interface{} not a string. We required a type cast.
 
-.play -edit intro-to-generics/searchinterfacefixed.go /START OMIT/,/END OMIT/
+.play -edit src/searchinterfacefixed.go /START OMIT/,/END OMIT/
 
 This method avoids all of the benifits and compile time safety we get from using a staticly typed language.
 
@@ -87,11 +87,11 @@ __Code generation__
 
 Let's look at a very simple example. How can we use generics to write the following functions a single time.
 
-.code intro-to-generics/copystring.go /START OMIT/,/END OMIT/
+.code src/copystring.go /START OMIT/,/END OMIT/
 
 ## Generic copy
 
-.code -edit intro-to-generics/copygeneric.go /START OMIT/,/END OMIT/
+.code -edit src/copygeneric.go /START OMIT/,/END OMIT/
 
 
 __What's new here?__
@@ -104,7 +104,7 @@ Runnable [Link](https://go2goplay.golang.org/p/CbcKpfcRf0E)
 
 ## Working Generic Search?
 
-.code -edit intro-to-generics/searchgenericinvalid.go
+.code -edit src/searchgenericinvalid.go
 
 Runnable [link](https://go2goplay.golang.org/p/LMcNNUX_lGh)
 
@@ -118,13 +118,13 @@ __New Type Constraint:__
 
 We need to change our type constriant from __any__ to a constraint that compares things
 
-.code -edit intro-to-generics/searchgeneric.go  /START OMIT/,/END OMIT/
+.code -edit src/searchgeneric.go  /START OMIT/,/END OMIT/
 
 * __comparable__ like __any__ is a predefined type constraint. It matches any type that can be compared with == and !=
 
 ## Generic search
 
-.code intro-to-generics/searchgeneric.go
+.code src/searchgeneric.go
 
 Runnable [link](https://go2goplay.golang.org/p/g_JOUlzJ4k0). 
 
@@ -134,11 +134,11 @@ Runnable [link](https://go2goplay.golang.org/p/g_JOUlzJ4k0).
 
 Let's reduce these max functions in to a single generic function
 
-.code intro-to-generics/maxs.go /START OMIT/,/END OMIT/
+.code src/maxs.go /START OMIT/,/END OMIT/
 
 ## Generic Max
 
-.code intro-to-generics/genericmaxbroken.go /START OMIT/,/END OMIT/
+.code src/genericmaxbroken.go /START OMIT/,/END OMIT/
 
 Runnable [link](https://go2goplay.golang.org/p/OMwYimIv-ea)
 
@@ -146,7 +146,7 @@ Runnable [link](https://go2goplay.golang.org/p/OMwYimIv-ea)
 
 Operator > does not wok on every type. We must define a type constraint 
 
-.code intro-to-generics/genericmax.go /START OMIT/,/END OMIT/
+.code src/genericmax.go /START OMIT/,/END OMIT/
 
 Runnable [link](https://go2goplay.golang.org/p/n-cXKd-RUCJ)
 
@@ -158,7 +158,7 @@ Note that __any__ is just an alias for __interface{}__
 
 The type parameter list as it implies can take multiple values for a type parameter
 
-.code intro-to-generics/multiple.go /START OMIT/,/END OMIT/
+.code src/multiple.go /START OMIT/,/END OMIT/
 
 Runnable [link](https://go2goplay.golang.org/p/02nd1sCKzvU)
 
@@ -168,7 +168,7 @@ Runnable [link](https://go2goplay.golang.org/p/02nd1sCKzvU)
 
 We can't define operators on user defined types. We instead use methods on types. Unsurprisingly we can use the standard interface syntax to constrain a generic type.
 
-.code intro-to-generics/sort.go /START OMIT/,/END OMIT/
+.code src/sort.go /START OMIT/,/END OMIT/
 
 Runnable [link](https://go2goplay.golang.org/p/E4AfKBBS4Tl)
 
